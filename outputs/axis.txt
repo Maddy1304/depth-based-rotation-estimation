@@ -1,2 +1,2 @@
 # Rotation axis vector [X Y Z] in camera frame
--0.998938 0.029735 0.035201
+-0.999324 0.024703 0.027234

@@ -16,6 +16,7 @@ def segment_largest_plane(
     ransac_n: int = 3,
     num_iterations: int = RANSAC_ITERATIONS,
 ) -> Tuple[Optional[np.ndarray], Optional[np.ndarray]]:
+    """Fit a plane with RANSAC and return its normal and inlier points."""
     if len(pcd.points) < MIN_PLANE_POINTS:
         return None, None
 
@@ -34,6 +35,7 @@ def segment_largest_plane(
 
 
 def compute_plane_area_3d(points3d: np.ndarray, normal: np.ndarray) -> float:
+    """Area of plane inliers via 2D convex hull on plane coordinates (m²)."""
     if points3d is None or normal is None or len(points3d) < 3:
         return 0.0
 
@@ -59,6 +61,10 @@ def compute_plane_area_3d(points3d: np.ndarray, normal: np.ndarray) -> float:
 
 
 def angle_with_camera_normal(normal: np.ndarray) -> Tuple[float, np.ndarray]:
+    """Angle between plane normal and camera optical axis [0,0,1] (deg).
+
+    Normal is flipped to face the camera for consistent angles.
+    """
     camera_axis = np.array([0.0, 0.0, 1.0])
     n = normal / np.linalg.norm(normal)
     if np.dot(n, camera_axis) < 0:
@@ -78,6 +84,7 @@ def process_depth_frame(
     build_pcd_fn,
     denoise_fn,
 ) -> Tuple[Optional[float], Optional[float], Optional[np.ndarray]]:
+    #End-to-end per-frame processing: depth → plane → angle, area, normal
     pts = depth_to_points_fn(depth_m, fx, fy, cx, cy)
     if len(pts) < MIN_PLANE_POINTS:
         return None, None, None

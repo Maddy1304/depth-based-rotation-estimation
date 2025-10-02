@@ -6,7 +6,10 @@ from .config import MAX_VALID_DEPTH_M, STAT_OUTLIER_NB_NEIGHBORS, STAT_OUTLIER_S
 
 
 def depth_to_points_3d(depth: np.ndarray, fx: float, fy: float, cx: float, cy: float) -> np.ndarray:
-    """Convert depth image to 3D point cloud in meters using pinhole intrinsics."""
+    #Project a depth image to XYZ (meters)
+
+    #depth: metric depth image (m). fx, fy, cx, cy: pinhole intrinsics
+    
     h, w = depth.shape
     u = np.arange(0, w)
     v = np.arange(0, h)
@@ -21,12 +24,14 @@ def depth_to_points_3d(depth: np.ndarray, fx: float, fy: float, cx: float, cy: f
 
 
 def build_point_cloud(points_xyz: np.ndarray) -> o3d.geometry.PointCloud:
+    #Create an Open3D PointCloud from XYZ numpy array
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(points_xyz)
     return pcd
 
 
 def remove_statistical_outliers(pcd: o3d.geometry.PointCloud) -> o3d.geometry.PointCloud:
+    #Simple statistical denoise. Helps plane fitting on raw depth clouds
     if len(pcd.points) == 0:
         return pcd
     pcd, _ = pcd.remove_statistical_outlier(

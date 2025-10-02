@@ -3,6 +3,11 @@ import numpy as np
 
 
 def estimate_rotation_axis_robust(normals: List[np.ndarray]) -> np.ndarray:
+    """Estimate a stable rotation axis from a set of plane normals.
+
+    Uses a light outlier filter (median + 2*std), then PCA. Returns a unit vector
+    with positive Z for consistency.
+    """
     if len(normals) < 3:
         return np.array([0.0, 0.0, 1.0])
 

@@ -1,8 +1,8 @@
 import numpy as np
 
-# -------------------------------
+
 # Configuration constants
-# -------------------------------
+
 
 # Estimated camera intrinsics defaults (60° FOV)
 ESTIMATED_FOV_DEG: float = 60.0

@@ -5,6 +5,7 @@ from rosbags.serde import deserialize_cdr
 
 
 def open_depth_bag(bag_dir: str = "depth", topic: str = "/depth") -> Tuple[Reader, list]:
+    #Open a ROS2 bag directory and return reader + matching connections
     reader = Reader(bag_dir)
     connections = []
     reader.__enter__()
@@ -17,6 +18,7 @@ def open_depth_bag(bag_dir: str = "depth", topic: str = "/depth") -> Tuple[Reade
 
 
 def iterate_depth_frames(reader: Reader, connections) -> Iterable[Tuple[int, int, np.ndarray]]:
+    #Yield (h, w, timestamp, depth_m) for each depth message on the topic
     for conn, timestamp, rawdata in reader.messages(connections=connections):
         msg = deserialize_cdr(rawdata, conn.msgtype)
         h, w = msg.height, msg.width
@@ -27,6 +29,7 @@ def iterate_depth_frames(reader: Reader, connections) -> Iterable[Tuple[int, int
 
 
 def close_reader(reader: Reader) -> None:
+    #Close the Reader opened with open_depth_bag
     reader.__exit__(None, None, None)
 
 

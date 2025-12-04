@@ -10,7 +10,7 @@ def estimate_intrinsics(width: int, height: int) -> Tuple[float, float, float, f
     Returns (fx, fy, cx, cy).
     """
     fx = fy = width / (2 * np.tan(np.radians(ESTIMATED_FOV_DEG) / 2))
-    cx = width / 2.0
+    cx = width / 2.0  #assumes optical center lies at center of image
     cy = height / 2.0
     return fx, fy, cx, cy
 

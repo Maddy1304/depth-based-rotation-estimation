@@ -17,7 +17,7 @@ def open_depth_bag(bag_dir: str = "depth", topic: str = "/depth") -> Tuple[Reade
     return reader, connections
 
 
-def iterate_depth_frames(reader: Reader, connections) -> Iterable[Tuple[int, int, np.ndarray]]:
+def iterate_depth_frames(reader: Reader, connections) -> Iterable[Tuple[int, int,float, np.ndarray]]:
     #Yield (h, w, timestamp, depth_m) for each depth message on the topic
     for conn, timestamp, rawdata in reader.messages(connections=connections):
         msg = deserialize_cdr(rawdata, conn.msgtype)

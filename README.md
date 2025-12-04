@@ -214,13 +214,10 @@ frame_id,timestamp_ns,angle_deg,area_m2
 - GPU acceleration for point cloud processing
 - Explicit occlusion handling
 
-## 📝 License
-
-[Specify your license here]
 
 ## 👤 Author
 
-[Your Name]
+Amar Madrewar
 
 ## 🙏 Acknowledgments
 
@@ -237,4 +234,3 @@ frame_id,timestamp_ns,angle_deg,area_m2
 
 ---
 
-**Note**: This project was developed for a perception assignment focusing on depth-based rotation estimation from ROS2 sensor data.
